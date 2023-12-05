@@ -26,7 +26,7 @@ export const postsSlice = apiSlice.injectEndpoints({
             }
           return post
         })
-        postsAdapter.setAll(initialState, loadedPosts)
+        return postsAdapter.setAll(initialState, loadedPosts)
       },
       providesTags: result => [
         { type: 'Post', id: 'LIST' },
@@ -49,7 +49,7 @@ export const postsSlice = apiSlice.injectEndpoints({
             }
           return post
         })
-        postsAdapter.setAll(initialState, loadedPosts)
+        return postsAdapter.setAll(initialState, loadedPosts)
       },
       providesTags: result => [...result.ids.map(id => ({ type: 'Post', id }))]
     }),
@@ -85,14 +85,14 @@ export const postsSlice = apiSlice.injectEndpoints({
     }),
     deletePost: builder.mutation({
       query: id => ({
-        url: `/post/${id}`,
+        url: `/posts/${id}`,
         method: 'DELETE',
         body: { id }
       }),
       invalidatesTags: (result, error, arg) => [{ type: 'Post', id: arg.id }]
     }),
     addReaction: builder.mutation({
-      query: (postId, reactions) => ({
+      query: ({ postId, reactions }) => ({
         url: `/posts/${postId}`,
         method: 'PATCH',
         body: { reactions }

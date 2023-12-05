@@ -13,7 +13,7 @@ function UserPage() {
     isSuccess,
     isError,
     error
-  } = useGetPostsByUserIdQuery(userId)
+  } = useGetPostsByUserIdQuery(intUserId)
 
   const user = useSelector(state => selectUserById(state, intUserId))
 
