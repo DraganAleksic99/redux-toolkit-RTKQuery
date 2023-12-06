@@ -1,7 +1,12 @@
 import { Link, useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import { Paper, styled } from '@mui/material'
 import { selectUserById } from './usersSlice'
 import { useGetPostsByUserIdQuery } from '../posts/postsSlice'
+
+const StyledPaper = styled(Paper)({
+  padding: '1em'
+})
 
 function UserPage() {
   const { userId } = useParams()
@@ -37,10 +42,12 @@ function UserPage() {
   }
 
   return (
-    <section>
-      <h2>{user?.name}</h2>
-      <ol>{content}</ol>
-    </section>
+    <StyledPaper>
+      <section>
+        <h2>{user?.name}</h2>
+        <ol>{content}</ol>
+      </section>
+    </StyledPaper>
   )
 }
 

@@ -5,14 +5,36 @@
 }
 
 html {
-  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-  background-color: white;
+  font-family: 'Roboto', sans-serif;
   color: #000;
 }
 
 body {
   min-height: 100vh;
   font-size: 1.5rem;
+}
+
+ul {
+  list-style: none;
+}
+
+ol {
+  counter-reset: list;
+  list-style: none;
+  padding-left: 1.5em;
+}
+
+ol li {
+  counter-increment: list;
+  position: relative;
+}
+
+ol li:before {
+  content: counter(list) '.';
+  position: absolute;
+  left: -1.5em;
+  text-align: center;
+  width: 1.5em;
 }
 
 input,
@@ -27,7 +49,7 @@ header {
   padding: 1rem;
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   background-color: purple;
   color: whitesmoke;
   position: sticky;
@@ -37,10 +59,6 @@ header {
 nav {
   display: flex;
   justify-content: flex-end;
-}
-
-nav ul {
-  list-style-type: none;
 }
 
 nav ul li {
@@ -59,35 +77,35 @@ nav a:focus {
   text-decoration: underline;
 }
 
-main {
-  max-width: 500px;
-  margin: auto;
-}
-
 section {
-  margin-top: 1em;
+  width: 100%;
   text-align: start;
+  justify-content: space-around;
 }
 
 article {
-  margin: 0.5em;
-  border: 1px solid #000;
-  border-radius: 10px;
-  padding: 1em;
+  padding: 0.5em 0.7em;
   text-align: start;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 h1 {
-  font-size: 3.5rem;
+  font-size: 3rem;
 }
 
 h2 {
-  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+}
+
+h3 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
 }
 
 p {
-  font-family: Arial, Helvetica, sans-serif;
-  line-height: 1.4;
+  line-height: 1.5;
   font-size: 1.2rem;
   margin: 0.5em 0;
 }
@@ -103,6 +121,12 @@ textarea {
 
 .postCredit {
   font-size: 1rem;
+  margin: 0;
+  margin-top: auto;
+}
+
+li a {
+  text-decoration: none;
 }
 
 .postCredit a,
@@ -117,11 +141,12 @@ textarea {
 }
 
 .excerpt {
-  font-style: italic;
+  margin-bottom: 1em;
 }
 
 .reactionButton {
-  margin: 0 0.25em 0 0.35em;
+  margin: 0 1em;
+  margin-left: 0;
   background: transparent;
   border: none;
   color: #000;
@@ -135,5 +160,12 @@ textarea {
 
 .routerLink {
   display: block;
-  margin-block-start: 1em;
+  margin: 1em 0;
+}
+
+.content {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 1em;
+  row-gap: 1.5em;
 }

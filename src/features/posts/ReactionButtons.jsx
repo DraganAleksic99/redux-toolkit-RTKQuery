@@ -25,7 +25,7 @@ function ReactionButtons({ post }) {
     </button>
   ))
 
-  return <div>{reactionButtons}</div>
+  return <span>{reactionButtons}</span>
 }
 
 export default ReactionButtons

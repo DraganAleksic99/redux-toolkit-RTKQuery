@@ -1,8 +1,20 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { useState, useRef } from 'react'
+import { Paper, styled } from '@mui/material'
 import { selectAllUsers } from '../users/usersSlice'
 import { useUpdatePostMutation, useDeletePostMutation, selectPostById } from './postsSlice'
+
+const StyledPaper = styled(Paper)({
+  padding: '1em'
+})
+
+const StyledSection = styled('section')({
+  '&&': {
+    maxWidth: '500px',
+    margin: 'auto'
+  }
+})
 
 function EditPostForm() {
   const [deletePost] = useDeletePostMutation()
@@ -69,48 +81,50 @@ function EditPostForm() {
   }
 
   return (
-    <section>
-      <h2>Edit Post</h2>
-      <form>
-        <label htmlFor="postTitle">Title:</label>
-        <input
-          type="text"
-          name="postTitle"
-          id="postTitle"
-          onChange={handleTitleChange}
-          value={title}
-        />
-        <label htmlFor="postAuthor">Author:</label>
-        <select
-          name="postAuthor"
-          id="postAuthor"
-          onChange={handleAuthorChange}
-          defaultValue={userId}
-        >
-          {users.map(user => (
-            <option key={user.id} value={user.id}>
-              {user.name}
-            </option>
-          ))}
-        </select>
-        <label htmlFor="postContent">Content:</label>
-        <input
-          type="text"
-          name="postContent"
-          id="postContent"
-          onChange={handleContentChange}
-          value={content}
-          ref={inputRef}
-          onClick={handleInputClick}
-        />
-        <button type="submit" onClick={e => handleSubmit(e)}>
-          Save Post
-        </button>
-        <button className="deleteButton" type="button" onClick={handleDeletePost}>
-          Delete Post
-        </button>
-      </form>
-    </section>
+    <StyledPaper>
+      <StyledSection>
+        <h2>Edit Post</h2>
+        <form>
+          <label htmlFor="postTitle">Title:</label>
+          <input
+            type="text"
+            name="postTitle"
+            id="postTitle"
+            onChange={handleTitleChange}
+            value={title}
+          />
+          <label htmlFor="postAuthor">Author:</label>
+          <select
+            name="postAuthor"
+            id="postAuthor"
+            onChange={handleAuthorChange}
+            defaultValue={userId}
+          >
+            {users.map(user => (
+              <option key={user.id} value={user.id}>
+                {user.name}
+              </option>
+            ))}
+          </select>
+          <label htmlFor="postContent">Content:</label>
+          <textarea
+            type="text"
+            name="postContent"
+            id="postContent"
+            onChange={handleContentChange}
+            value={content}
+            ref={inputRef}
+            onClick={handleInputClick}
+          />
+          <button type="submit" onClick={e => handleSubmit(e)}>
+            Save Post
+          </button>
+          <button className="deleteButton" type="button" onClick={handleDeletePost}>
+            Delete Post
+          </button>
+        </form>
+      </StyledSection>
+    </StyledPaper>
   )
 }
 

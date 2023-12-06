@@ -1,6 +1,11 @@
 import { useSelector } from 'react-redux'
+import { Paper, styled } from '@mui/material'
 import { selectPostIds, useGetPostsQuery } from './postsSlice'
 import PostsExcerpt from './PostsExcerpt'
+
+const StyledPaper = styled(Paper)({
+  padding: '1em'
+})
 
 function PostsList() {
   // const posts = useSelector(selectAllPosts)
@@ -19,10 +24,12 @@ function PostsList() {
   }
 
   return (
-    <section>
-      <h2>Posts</h2>
-      {content}
-    </section>
+    <StyledPaper elevation={3}>
+      <section>
+        <h2>Posts</h2>
+        <div className="content">{content}</div>
+      </section>
+    </StyledPaper>
   )
 }
 

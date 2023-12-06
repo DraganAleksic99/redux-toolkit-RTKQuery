@@ -34,7 +34,7 @@ export const postsSlice = apiSlice.injectEndpoints({
       ]
     }),
     getPostsByUserId: builder.query({
-      query: id => `/posts/?userid=${id}`,
+      query: id => `/posts/?userId=${id}`,
       transformResponse: responseData => {
         let min = 1
         const loadedPosts = responseData.map(post => {
