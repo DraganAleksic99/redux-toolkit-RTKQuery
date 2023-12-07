@@ -42,7 +42,6 @@ textarea,
 button,
 select {
   font: inherit;
-  margin-bottom: 1em;
 }
 
 header {
@@ -156,6 +155,7 @@ li a {
 .deleteButton {
   background-color: palevioletred;
   color: white;
+  margin-top: 1em;
 }
 
 .routerLink {

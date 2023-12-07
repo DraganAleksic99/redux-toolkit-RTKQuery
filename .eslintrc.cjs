@@ -20,6 +20,7 @@ module.exports = {
     'no-param-reassign': ['error', { props: false }],
     'no-plusplus': 'off',
     'react/prop-types': 'off',
-    'no-console': 'off'
+    'no-console': 'off',
+    'react/jsx-props-no-spreading': 'off'
   }
 }

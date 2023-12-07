@@ -1,9 +1,11 @@
-import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { Paper, styled } from '@mui/material'
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
 import { useAddNewPostMutation } from './postsSlice'
 import { selectAllUsers } from '../users/usersSlice'
+import validationSchema from './yupValidationSchema'
 
 const StyledPaper = styled(Paper)({
   padding: '1em'
@@ -17,32 +19,30 @@ const StyledSection = styled('section')({
 })
 
 function PostsForm() {
-  const [addNewPost, { isLoading }] = useAddNewPostMutation()
-  const [title, setTitle] = useState('')
-  const [content, setContent] = useState('')
-  const [userId, setUserId] = useState(1)
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
+    defaultValues: {
+      title: '',
+      author: '1',
+      content: ''
+    },
+    resolver: yupResolver(validationSchema)
+  })
+  const [addNewPost] = useAddNewPostMutation()
 
   const users = useSelector(selectAllUsers)
   const navigate = useNavigate()
 
-  const handleTitleChange = e => setTitle(e.target.value)
-  const handleContentChange = e => setContent(e.target.value)
-  const handleAuthorChange = e => setUserId(Number(e.target.value))
-
-  const canSave = [title, content, userId].every(Boolean) && !isLoading
-
-  const handleSubmit = async e => {
-    e.preventDefault()
-    if (canSave) {
-      try {
-        await addNewPost({ title, userId, body: content })
-        setTitle('')
-        setContent('')
-        setUserId(1)
-        navigate('/')
-      } catch (error) {
-        console.error(error)
-      }
+  const onHandleSubmit = async data => {
+    const { title, content, author } = data
+    try {
+      await addNewPost({ title, userId: author, body: content })
+      navigate('/')
+    } catch (error) {
+      console.error(error)
     }
   }
 
@@ -50,34 +50,23 @@ function PostsForm() {
     <StyledPaper elevation={3}>
       <StyledSection>
         <h2>Add a New Post</h2>
-        <form>
-          <label htmlFor="postTitle">Title:</label>
-          <input
-            type="text"
-            name="postTitle"
-            id="postTitle"
-            onChange={handleTitleChange}
-            value={title}
-          />
-          <label htmlFor="postAuthor">Author:</label>
-          <select name="postAuthor" id="postAuthor" onChange={handleAuthorChange} value={userId}>
+        <form onSubmit={handleSubmit(data => onHandleSubmit(data))}>
+          <label htmlFor="title">Title:</label>
+          <input type="text" {...register('title')} id="title" />
+          <p>{errors?.title?.message}</p>
+          <label htmlFor="author">Author:</label>
+          <select {...register('author')} id="author">
             {users.map(user => (
               <option key={user.id} value={user.id}>
                 {user.name}
               </option>
             ))}
           </select>
-          <label htmlFor="postContent">Content:</label>
-          <textarea
-            type="text"
-            name="postContent"
-            id="postContent"
-            onChange={handleContentChange}
-            value={content}
-          />
-          <button type="submit" onClick={e => handleSubmit(e)}>
-            Save Post
-          </button>
+          <p>{errors?.author?.message}</p>
+          <label htmlFor="content">Content:</label>
+          <textarea type="text" {...register('content')} id="content" />
+          <p>{errors?.content?.message}</p>
+          <button type="submit">Save Post</button>
         </form>
       </StyledSection>
     </StyledPaper>
